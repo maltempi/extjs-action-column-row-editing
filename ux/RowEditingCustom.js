@@ -44,14 +44,19 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
     extraButtons: [],
 
     /**
+     * Stores the extra columns to hide and show it on events.
+     */
+    extraColumns: [],
+
+    /**
      * Configure everything
      */
     initEditorConfig: function () {
 
         /*
-         *  Adds the extra action column
+         *  Adds the extra action columns
          */
-        this.addExtraColumn();
+        this.addExtraColumns();
 
         var me = this,
             grid = me.grid,
@@ -72,7 +77,6 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
                 hidden: true,
                 view: view,
                 updateButton: function (valid) { },
-                // keep a reference.. 
                 editingPlugin: me
             },
             item;
@@ -107,19 +111,84 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
         return cfg;
     },
 
-    listeners: {
-        beforeedit: function (grid, e, eOpts) {
-            return e.column.xtype !== 'actioncolumn';
+    /**
+     * Cancel edit. Sets the extra columns to false.
+     */
+    cancelEdit: function () {
+        this.setExtraColumnsVisible(false);
+        this.callSuper();
+    },
+
+    /**
+     * Save edit. Sets the extra columns to false.
+     */
+    completeEdit: function () {
+        this.setExtraColumnsVisible(false);
+        this.callSuper();
+    },
+
+    /**
+     * Starts editing the specified record, using the specified Column definition to define which field is being edited.
+     * @param {Ext.data.Model} record The Store data record which backs the row to be edited.
+     * @param {Ext.grid.column.Column/Number} [columnHeader] The Column object defining the column field to be focused, or index of the column.
+     * If not specified, it will default to the first visible column.
+     * @return {Boolean} `true` if editing was started, `false` otherwise.
+     */
+    startEdit: function (record, columnHeader) {
+
+        var me = this,
+            editor = me.getEditor(),
+            grid = me.grid,
+            context;
+
+
+        if (Ext.isEmpty(columnHeader)) {
+            columnHeader = me.grid.getTopLevelVisibleColumnManager().getHeaderAtIndex(0);
         }
+
+        if (editor.beforeEdit() !== false) {
+            context = me.getEditingContext(record, columnHeader);
+            if (context && me.beforeEdit(context) !== false && me.fireEvent('beforeedit', me, context) !== false && !context.cancel) {
+                me.context = context;
+
+                // If editing one side of a lockable grid, cancel any edit on the other side. 
+                if (me.lockingPartner) {
+                    me.lockingPartner.cancelEdit();
+                }
+                editor.startEdit(context.record, context.column, context);
+                me.editing = true;
+
+                this.setExtraColumnsVisible(true);
+
+                return true;
+            }
+        }
+
+        return false;
+    },
+
+    /**
+     * Hides or shows the extra action columns in the grid.
+     * It is used on startEdit(), cancelEdit() and completeEdit() methods.
+     * @param {*} isVisible 
+     */
+    setExtraColumnsVisible(isVisible) {
+        this.extraColumns.forEach(function (element) {
+            element.setVisible(isVisible);
+        });
     },
 
     /**
      * Add the extra action column
      */
-    addExtraColumn() {
+    addExtraColumns() {
         var me = this,
             grid = me.grid;
 
+
+        /*
+        Defines the cancel button
+        */
         if (me.cancelButton) {
 
             if (me.cancelButton === true) {
@@ -129,7 +198,7 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
                     editor: true,
                     tooltip: 'Cancel',
                     handler: function (grid, rowIndex, colIndex) {
-                        alert('todo!!!');
+                        me.cancelEdit();
                     }
                 };
             }
@@ -137,6 +206,9 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
             me.extraButtons.push(me.cancelButton);
         }
 
+        /*
+        Defines the saveButton
+        */
         if (me.saveButton) {
 
             if (me.saveButton === true) {
@@ -145,7 +217,7 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
                     xtype: 'button',
                     tooltip: 'Save the edited line',
                     handler: function (grid, rowIndex, colIndex) {
-                        alert('todo!!!');
+                        me.completeEdit();
                     }
                 };
             }
@@ -153,9 +225,12 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
             me.extraButtons.push(me.saveButton);
         }
 
+        /**
+         * Adds the extra columns
+         */
         if (me.extraButtons) {
             for (index in me.extraButtons) {
-                grid.headerCt.insert(grid.columns.length, {
+                var column = {
                     xtype: 'actioncolumn',
                     width: 30,
                     align: 'center',
@@ -166,7 +241,9 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
                     resizable: false,
                     hideable: false,
                     menuDisabled: true
-                });
+                };
+
+                me.extraColumns.push(grid.headerCt.insert(grid.columns.length, column));
             }
         }
     }
