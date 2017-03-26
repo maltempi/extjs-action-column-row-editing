@@ -1,6 +1,6 @@
-Ext.define('Ext.grid.plugin.RowEditingCustom', {
+Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
     extend: 'Ext.grid.plugin.RowEditing',
-    alias: 'plugin.roweditingCustom',
+    alias: 'plugin.actionColumnRowEditing',
 
     /**
      * Property
