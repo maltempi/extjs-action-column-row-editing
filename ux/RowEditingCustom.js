@@ -19,6 +19,22 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
     saveButton: true,
 
     /**
+     * Save button icon class
+     * 
+     * Accepts: string
+     * default: 'x-fa fa-check'
+     */
+    saveButtonIconCls: 'x-fa fa-check',
+
+    /**
+     * Save button tool tip
+     * 
+     * Accepts: string
+     * default: 'Save the edited line'
+     */
+    saveButtonToolTip: 'Save the edited line',
+
+    /**
      * Property:
      * It adds a button in a extra action column into grid.
      * 
@@ -26,6 +42,22 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
      * Default: true
      */
     cancelButton: true,
+
+    /**
+     * Cancel button icon class
+     * 
+     * Accepts: string
+     * default: 'x-fa fa-times'
+     */
+    cancelButtonIconCls: 'x-fa fa-times',
+
+    /**
+     * Cancel button tool tip
+     * 
+     * Accepts: string
+     * default: 'Cancel'
+     */
+    cancelButtonToolTip: 'Cancel',
 
     /**
      * Hides a column on edit
@@ -193,10 +225,10 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
 
             if (me.cancelButton === true) {
                 me.cancelButton = {
-                    iconCls: 'x-fa fa-times',
+                    iconCls: me.cancelButtonIconCls,
                     xtype: 'button',
                     editor: true,
-                    tooltip: 'Cancel',
+                    tooltip: me.cancelButtonToolTip,
                     handler: function (grid, rowIndex, colIndex) {
                         me.cancelEdit();
                     }
@@ -213,9 +245,9 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
 
             if (me.saveButton === true) {
                 me.saveButton = {
-                    iconCls: 'x-fa fa-check',
+                    iconCls: me.saveButtonIconCls,
                     xtype: 'button',
-                    tooltip: 'Save the edited line',
+                    tooltip: me.saveButtonToolTip,
                     handler: function (grid, rowIndex, colIndex) {
                         me.completeEdit();
                     }
