@@ -8,7 +8,7 @@
  * Issues: https://github.com/maltempi/extjs-action-column-row-editing/issues
  * License: https://github.com/maltempi/extjs-action-column-row-editing/blob/master/LICENSE
  * 
- * General rules: Fell free to sugest new ideas, fork this and so on :)
+ * General rules: Feel free to suggest new ideas, fork it and so on :)
  * 
  * Required Version: ExtJS 6.2.0 (actually it wasn't tested on others versions)
  */
