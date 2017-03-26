@@ -6,16 +6,24 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * Property
      * It hides the default action buttons
      * 
-     * default: true
+     * Defaults to: true
      */
     hiddenButtons: true,
+
+    /**
+     * Property
+     * The button ui
+     * 
+     * Defaults to: 'default'
+     */
+    buttonsUi: 'default',
 
     /**
      * Property
      * It adds a button in a extra action column into grid.
      * 
      * Accepts: boolean (true show | false hide)| button object (not implemented yet)
-     * Default: true
+     * Defaults to: true
      */
     saveButton: true,
 
@@ -23,7 +31,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * Save button icon class
      * 
      * Accepts: string
-     * default: 'x-fa fa-check'
+     * Defaults to: 'x-fa fa-check'
      */
     saveButtonIconCls: 'x-fa fa-check',
 
@@ -31,7 +39,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * Save button tool tip
      * 
      * Accepts: string
-     * default: 'Save the edited line'
+     * Defaults to: 'Save the edited line'
      */
     saveButtonToolTip: 'Save the edited line',
 
@@ -40,7 +48,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * It adds a button in a extra action column into grid.
      * 
      * Accepts: boolean (true show | false hide)| button object (not implemented yet)
-     * Default: true
+     * Defaults to: true
      */
     cancelButton: true,
 
@@ -48,7 +56,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * Cancel button icon class
      * 
      * Accepts: string
-     * default: 'x-fa fa-times'
+     * Defaults to: 'x-fa fa-times'
      */
     cancelButtonIconCls: 'x-fa fa-times',
 
@@ -56,7 +64,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * Cancel button tool tip
      * 
      * Accepts: string
-     * default: 'Cancel'
+     * Defaults to: 'Cancel'
      */
     cancelButtonToolTip: 'Cancel',
 
@@ -64,7 +72,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * A list of columns ids to hide on edit.
      * 
      * Accepts: list string (itemId)
-     * default: []
+     * Defaults to: empty list []
      */
     hiddenColumnsOnEdit: [],
 
@@ -72,12 +80,14 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * Sets extra buttons on action column
      * 
      * Accepts: list of objects
-     * default: empty list
+     * Defaults to: empty list []
      */
     extraButtons: [],
 
     /**
      * Stores the extra columns to hide and show it on events.
+     * 
+     * Defaults to: empty list []
      */
     extraColumns: [],
 
@@ -200,7 +210,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
     /**
      * Hides or shows the extra action columns in the grid.
      * It is used on startEdit(), cancelEdit() and completeEdit() methods.
-     * @param {*} isVisible 
+     * @param {Boolean} isVisible 
      */
     setExtraColumnsVisible(isVisible) {
         var me = this,
@@ -235,6 +245,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                 me.cancelButton = {
                     iconCls: me.cancelButtonIconCls,
                     xtype: 'button',
+                    ui: me.buttonsUi,
                     tooltip: me.cancelButtonToolTip,
                     handler: function (grid, rowIndex, colIndex) {
                         me.cancelEdit();
@@ -252,6 +263,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                 me.saveButton = {
                     iconCls: me.saveButtonIconCls,
                     xtype: 'button',
+                    ui: me.buttonsUi,
                     tooltip: me.saveButtonToolTip,
                     handler: function (grid, rowIndex, colIndex) {
                         me.completeEdit();
