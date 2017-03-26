@@ -5,12 +5,13 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
     /**
      * Property
      * It hides the default action buttons
+     * 
      * default: true
      */
     hiddenButtons: true,
 
     /**
-     * Property:
+     * Property
      * It adds a button in a extra action column into grid.
      * 
      * Accepts: boolean (true show | false hide)| button object (not implemented yet)
@@ -85,9 +86,7 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
      */
     initEditorConfig: function () {
 
-        /*
-         *  Adds the extra action columns
-         */
+        // Adds the extra action columns
         this.addExtraColumns();
 
         var me = this,
@@ -113,9 +112,8 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
             },
             item;
 
-        /*
-         *  Custom configuration.
-         */
+
+        // Custom configuration.
         if (me.hiddenButtons) {
             cfg.getFloatingButtons = function () {
                 var me = this,
@@ -215,7 +213,6 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
         if (me.hiddenColumnsOnEdit) {
             me.hiddenColumnsOnEdit.forEach(function (columnItemId) {
                 var column = grid.down('[itemId=' + columnItemId + ']');
-                console.log(column);
                 if (column) {
                     column.setVisible(!isVisible);
                 }
@@ -231,16 +228,13 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
             grid = me.grid;
 
 
-        /*
-        Defines the cancel button
-        */
+        // Defines the cancel button
         if (me.cancelButton) {
 
             if (me.cancelButton === true) {
                 me.cancelButton = {
                     iconCls: me.cancelButtonIconCls,
                     xtype: 'button',
-                    editor: true,
                     tooltip: me.cancelButtonToolTip,
                     handler: function (grid, rowIndex, colIndex) {
                         me.cancelEdit();
@@ -251,9 +245,7 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
             me.extraButtons.push(me.cancelButton);
         }
 
-        /*
-        Defines the saveButton
-        */
+        // Defines the saveButton
         if (me.saveButton) {
 
             if (me.saveButton === true) {
@@ -270,9 +262,7 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
             me.extraButtons.push(me.saveButton);
         }
 
-        /**
-         * Adds the extra columns
-         */
+        //Adds the extra columns
         if (me.extraButtons) {
             for (index in me.extraButtons) {
                 var column = {
@@ -285,7 +275,6 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
                     border: false,
                     resizable: false,
                     hideable: false,
-                    menuDisabled: true
                 };
 
                 me.extraColumns.push(grid.headerCt.insert(grid.columns.length, column));

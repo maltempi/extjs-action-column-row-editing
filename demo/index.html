@@ -6,6 +6,7 @@
     <title>Custom Row Editing - EXTJS 6.2.0</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-triton/resources/theme-triton-all.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js"></script>
     <script src="../ux/RowEditingCustom.js"></script>
     <script>
@@ -40,13 +41,30 @@
 
                     renderTo: document.body,
 
+                    title: 'Action Column Row Editing - Demo',
+
+                    width: 300,
+                    border: true,
+                    align: 'center',
+                    // forceFit: true,
+
                     plugins: {
                         ptype: 'roweditingCustom',
                         hiddenColumnsOnEdit: ['startEditActionColumn'],
                         clicksToEdit: 2
                     },
 
+                    listeners: {
+                        edit: function () {
+                            alert('on edit event');
+                        },
+                        beforeedit: function () {
+                            alert('on before edit event');
+                        }
+                    },
+
                     store: store,
+
 
                     columns: [{
                         xtype: 'gridcolumn',
@@ -64,6 +82,7 @@
 
                         xtype: 'actioncolumn',
                         width: 50,
+                        border: false,
                         itemId: 'startEditActionColumn',
                         align: 'center',
                         items: [
