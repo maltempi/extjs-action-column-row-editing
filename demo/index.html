@@ -42,6 +42,7 @@
 
                     plugins: {
                         ptype: 'roweditingCustom',
+                        hiddenColumnsOnEdit: ['startEditActionColumn'],
                         clicksToEdit: 2
                     },
 
@@ -59,7 +60,21 @@
                         editor: 'textfield',
                         dataIndex: 'column2',
                         text: 'Column 2'
-                    }]
+                    }, {
+
+                        xtype: 'actioncolumn',
+                        width: 50,
+                        itemId: 'startEditActionColumn',
+                        align: 'center',
+                        items: [
+                            {
+                                iconCls: 'x-fa fa-pencil-square-o',
+                                handler: function (grid, rowIndex, colIndex) {
+                                    grid.editingPlugin.startEdit(rowIndex, 0);
+                                }
+                            }
+                        ]
+                    },]
                 });
             }
         });

@@ -60,12 +60,12 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
     cancelButtonToolTip: 'Cancel',
 
     /**
-     * Hides a column on edit
+     * A list of columns ids to hide on edit.
      * 
-     * Accepts: string (itemId)
-     * default: null
+     * Accepts: list string (itemId)
+     * default: []
      */
-    columnHiddenOnEdit: null,
+    hiddenColumnsOnEdit: [],
 
     /**
      * Sets extra buttons on action column
@@ -205,9 +205,22 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
      * @param {*} isVisible 
      */
     setExtraColumnsVisible(isVisible) {
-        this.extraColumns.forEach(function (element) {
+        var me = this,
+            grid = me.grid;
+
+        me.extraColumns.forEach(function (element) {
             element.setVisible(isVisible);
         });
+
+        if (me.hiddenColumnsOnEdit) {
+            me.hiddenColumnsOnEdit.forEach(function (columnItemId) {
+                var column = grid.down('[itemId=' + columnItemId + ']');
+                console.log(column);
+                if (column) {
+                    column.setVisible(!isVisible);
+                }
+            });
+        }
     },
 
     /**
