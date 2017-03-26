@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Custom Row Editing - EXTJS 6.2.0</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-triton/resources/theme-triton-all.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js"></script>
+    <script src="../ux/RowEditingCustom.js"></script>
+    <script>
+        /* Defines the fake data*/
+        var data = [{
+            column1: 'Row 1 - Column 1',
+            column2: 'Row 1 - Column 2'
+        }, {
+            column1: 'Row 2 - Column 1',
+            column2: 'Row 2 - Column 2'
+        }];
+
+        var store = Ext.create('Ext.data.Store', {
+            fields: ['column1', 'column2'],
+            proxy: {
+                type: 'memory',
+                reader: {
+                    type: 'json'
+                }
+            }
+        });
+
+        store.loadRawData(data, false);
+
+        /* Application */
+        Ext.application({
+            name: 'Fiddle',
+
+            launch: function () {
+
+                Ext.create('Ext.grid.Panel', {
+
+                    renderTo: document.body,
+
+                    plugins: {
+                        ptype: 'roweditingCustom',
+                        clicksToEdit: 2
+                    },
+
+                    store: store,
+
+                    columns: [{
+                        xtype: 'gridcolumn',
+                        align: 'left',
+                        dataIndex: 'column1',
+                        text: 'Column 1',
+                        editor: 'textfield',
+                    }, {
+                        xtype: 'gridcolumn',
+                        align: 'center',
+                        editor: 'textfield',
+                        dataIndex: 'column2',
+                        text: 'Column 2'
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

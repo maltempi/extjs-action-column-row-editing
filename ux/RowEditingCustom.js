@@ -2,11 +2,7 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
     extend: 'Ext.grid.plugin.RowEditing',
     alias: 'plugin.roweditingCustom',
 
-    initEditor: function () {
-        return new Ext.grid.RowEditor(this.initEditorConfig());
-    },
-
-    hideButtons: true,
+    hiddenButtons: true,
 
     initEditorConfig: function () {
         var me = this,
@@ -26,8 +22,9 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
                 formAriaLabelRowBase: me.formAriaLabelRowBase + (grid.hideHeaders ? -1 : 0),
                 fields: headerCt.getGridColumns(),
                 hidden: true,
-                updateButton: function (valid) { },
                 view: view,
+                updateButton: function (valid) { },
+                // keep a reference.. 
                 editingPlugin: me
             },
             item;
@@ -35,7 +32,7 @@ Ext.define('Ext.grid.plugin.RowEditingCustom', {
         /*
             Custom configuration.
         */
-        if (me.hideButtons) {
+        if (me.hiddenButtons) {
             cfg.getFloatingButtons = function () {
                 var me = this,
                     btns = me.floatingButtons;
