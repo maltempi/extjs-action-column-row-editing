@@ -111,6 +111,10 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      */
     initEditorConfig: function () {
 
+        // Clear info 
+        this.extraButtons = [];
+        this.extraColumns = [];
+
         // Adds the extra action columns
         this.addExtraColumns();
 
@@ -136,7 +140,6 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                 editingPlugin: me
             },
             item;
-
 
         // Custom configuration.
         if (me.hiddenButtons) {
