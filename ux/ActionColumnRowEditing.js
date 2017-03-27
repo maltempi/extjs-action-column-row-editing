@@ -115,9 +115,6 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
         this.extraButtons = [];
         this.extraColumns = [];
 
-        // Adds the extra action columns
-        this.addExtraColumns();
-
         var me = this,
             grid = me.grid,
             view = me.view,
@@ -185,6 +182,9 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
         this.callSuper();
     },
 
+
+    ok: false,
+
     /**
      * Starts editing the specified record, using the specified Column definition to define which field is being edited.
      * @param {Ext.data.Model} record The Store data record which backs the row to be edited.
@@ -199,6 +199,9 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
             grid = me.grid,
             context;
 
+        if (me.extraColumns.length === 0) {
+            me.addExtraColumns();
+        }
 
         if (Ext.isEmpty(columnHeader)) {
             columnHeader = me.grid.getTopLevelVisibleColumnManager().getHeaderAtIndex(0);
@@ -255,7 +258,6 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
         var me = this,
             grid = me.grid;
 
-
         // Defines the cancel button
         if (me.cancelButton) {
 
@@ -264,6 +266,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                     iconCls: me.cancelButtonIconCls,
                     xtype: 'button',
                     ui: me.buttonsUi,
+                    maxWidth: 30,
                     tooltip: me.cancelButtonToolTip,
                     handler: function (grid, rowIndex, colIndex) {
                         me.cancelEdit();
@@ -281,6 +284,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                 me.saveButton = {
                     iconCls: me.saveButtonIconCls,
                     xtype: 'button',
+                    maxWidth: 30,
                     ui: me.buttonsUi,
                     tooltip: me.saveButtonToolTip,
                     handler: function (grid, rowIndex, colIndex) {
@@ -292,12 +296,12 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
             me.extraButtons.push(me.saveButton);
         }
 
-        //Adds the extra columns
+        // Adds the extra columns
         if (me.extraButtons) {
             for (index in me.extraButtons) {
                 var column = {
                     xtype: 'actioncolumn',
-                    width: 30,
+                    maxWidth: 30,
                     align: 'center',
                     editor: me.extraButtons[index],
                     menuDisabled: true,

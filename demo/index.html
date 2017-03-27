@@ -39,7 +39,6 @@
 
         store.loadRawData(data, false);
 
-
         var store2 = Ext.create('Ext.data.Store', {
             fields: ['column1', 'column2'],
             proxy: {
@@ -64,7 +63,7 @@
 
                     title: 'Action Column Row Editing - Demo',
 
-                    width: 300,
+                    width: 600,
                     margin: 20,
                     border: true,
 
@@ -85,7 +84,7 @@
                     },
 
                     store: store,
-
+                    forceFit: true,
 
                     columns: [{
                         xtype: 'gridcolumn',
@@ -102,7 +101,8 @@
                     }, {
 
                         xtype: 'actioncolumn',
-                        width: 50,
+                        maxWidth: 50,
+                        minWidth: 50,
                         border: false,
                         itemId: 'startEditActionColumn',
                         align: 'center',
