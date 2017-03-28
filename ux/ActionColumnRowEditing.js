@@ -233,7 +233,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * It is used on startEdit(), cancelEdit() and completeEdit() methods.
      * @param {Boolean} isVisible 
      */
-    setExtraColumnsVisible(isVisible) {
+    setExtraColumnsVisible: function (isVisible) {
         var me = this,
             grid = me.grid;
 
@@ -254,7 +254,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
     /**
      * Add the extra action column
      */
-    addExtraColumns() {
+    addExtraColumns: function () {
         var me = this,
             grid = me.grid;
 
