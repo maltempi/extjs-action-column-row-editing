@@ -8,6 +8,10 @@
  * Issues: https://github.com/maltempi/extjs-action-column-row-editing/issues
  * License: https://github.com/maltempi/extjs-action-column-row-editing/blob/master/LICENSE
  * 
+ * Base code:
+ *   http://docs.sencha.com/extjs/6.2.0/classic/src/RowEditor.js.html#Ext.grid.RowEditor
+ *   http://docs.sencha.com/extjs/6.2.0/classic/src/RowEditing.js.html#Ext.grid.plugin.RowEditing
+ *
  * General rules: Feel free to suggest new ideas, fork it and so on :)
  * 
  * Required Version: ExtJS 6.2.0 (actually it wasn't tested on others versions)
@@ -170,18 +174,20 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
      * Cancel edit. Sets the extra columns to false.
      */
     cancelEdit: function () {
-        this.setExtraColumnsVisible(false);
         this.callSuper();
+        this.setExtraColumnsVisible(false);
     },
 
     /**
      * Save edit. Sets the extra columns to false.
      */
     completeEdit: function () {
-        this.setExtraColumnsVisible(false);
+        if (!this.editor.form.isValid()) {
+            return false;
+        }
         this.callSuper();
+        this.setExtraColumnsVisible(false);
     },
-
 
     ok: false,
 
