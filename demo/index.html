@@ -27,8 +27,14 @@
             column2: '2a Row 2 - Column 2'
         }];
 
-        var store = Ext.create('Ext.data.Store', {
-            fields: ['column1', 'column2'],
+        Ext.define('MyApp.model.Record',  {
+            extend: 'Ext.data.Model',
+            fields: ['column1', 'column2']
+        });
+
+        Ext.define('MyApp.store.RecordStore',  {
+            extend: 'Ext.data.Store',
+            model: 'MyApp.model.Record',
             proxy: {
                 type: 'memory',
                 reader: {
@@ -37,18 +43,10 @@
             }
         });
 
+        // let's keep it easy for this POC
+        var store = Ext.create('MyApp.store.RecordStore', {});
+        var store2 = Ext.create('MyApp.store.RecordStore', {});
         store.loadRawData(data, false);
-
-        var store2 = Ext.create('Ext.data.Store', {
-            fields: ['column1', 'column2'],
-            proxy: {
-                type: 'memory',
-                reader: {
-                    type: 'json'
-                }
-            }
-        });
-
         store2.loadRawData(data2, false);
 
         /* Application */
@@ -66,6 +64,7 @@
                     width: 600,
                     margin: 20,
                     border: true,
+                    id: 'grid1', // let's keep it easy for this POC
 
                     plugins: {
                         ptype: 'actionColumnRowEditing',
@@ -114,7 +113,20 @@
                                 }
                             }
                         ]
-                    },]
+                    }],
+                    tbar: [{
+                        text: 'Add',
+                        iconCls: 'x-fa fa-plus',
+                        tooltip: 'Add new record',
+                        handler: function() {
+                            var grid = Ext.getCmp('grid1');
+                            var model = Ext.create('MyApp.model.Record', { /* Defaults here */ });
+
+                            store.insert(store.data.length, model);
+                            grid.editingPlugin.startEdit(store.data.length, 0);
+                        }
+                    }]
+
                 });
 
                 /*
@@ -129,6 +141,7 @@
                     margin: 20,
                     width: 300,
                     border: true,
+                    id: 'grid2', // let's keep it easy for this POC
 
                     plugins: {
                         ptype: 'actionColumnRowEditing',
@@ -175,7 +188,20 @@
                                 }
                             }
                         ]
-                    },]
+                    }],
+
+                    tbar: [{
+                        text: 'Add',
+                        iconCls: 'x-fa fa-plus',
+                        tooltip: 'Add new record',
+                        handler: function() {
+                            var grid = Ext.getCmp('grid2');
+                            var model = Ext.create('MyApp.model.Record', { column1: 'Column 1 - Default' });
+
+                            store2.insert(store.data.length, model);
+                            grid.editingPlugin.startEdit(store.data.length, 0);
+                        }
+                    }]
                 });
             }
         });
