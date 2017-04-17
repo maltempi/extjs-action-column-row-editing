@@ -1,8 +1,8 @@
-# Action Column Row Editing - An custom ExtJS Plugin
+# Action Column Row Editing - A custom ExtJS Plugin
 An ExtJS plugin based on Ext.grid.plugin.RowEditing changing the default floating buttons to an action column.
 
 ## General Info
-This is a custom plugin created as a alternative to default usability provided by Ext.grid.plugin.RowEditing and it is also a workarround to this issue: https://www.sencha.com/forum/showthread.php?337303-Buttons-(Save-and-Cancel)-are-overlapped-by-grid-on-rowediting-plugin
+This is a custom plugin created as a alternative to default usability provided by Ext.grid.plugin.RowEditing and it is also a workaround to this issue: https://www.sencha.com/forum/showthread.php?337303-Buttons-(Save-and-Cancel)-are-overlapped-by-grid-on-rowediting-plugin
 
 * Demo website: https://maltempi.github.io/extjs-action-column-row-editing/demo/
 * Issues: https://github.com/maltempi/extjs-action-column-row-editing/issues

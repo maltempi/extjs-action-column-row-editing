@@ -1,6 +1,6 @@
 /**
  * This is a custom plugin created as a alternative to default usability provided by Ext.grid.plugin.RowEditing and it is also a 
- * workarround to this issue:
+ * workaround to this issue:
  * https://www.sencha.com/forum/showthread.php?337303-Buttons-(Save-and-Cancel)-are-overlapped-by-grid-on-rowediting-plugin
  * 
  * Repository: https://github.com/maltempi/extjs-action-column-row-editing
@@ -151,7 +151,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                 if (!btns && !me.destroying && !me.destroyed) {
                     me.floatingButtons = btns = Ext.create('Ext.container.Container', {
                         hidden: true,
-                        setButtonPosition: function () { },
+                        setButtonPosition: function () { }
                     });
                 }
 
@@ -314,7 +314,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                     sortable: false,
                     border: false,
                     resizable: false,
-                    hideable: false,
+                    hideable: false
                 };
 
                 me.extraColumns.push(grid.headerCt.insert(grid.columns.length, column));
