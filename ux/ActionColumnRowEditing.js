@@ -252,6 +252,7 @@ Ext.define('Ext.grid.plugin.ActionColumnRowEditing', {
                 var column = grid.down('[itemId=' + columnItemId + ']');
                 if (column) {
                     column.setVisible(!isVisible);
+                    column.blur();
                 }
             });
         }
